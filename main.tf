@@ -9,7 +9,7 @@ resource "azurerm_resource_group" "main" {
 
 resource "azurerm_virtual_network" "main" {
   name                = "${var.prefix}-network"
-  address_space       = ["${var.ipaddress}/256"]
+  address_space       = ["${var.ipaddress}/16"]
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
 }
@@ -37,7 +37,7 @@ resource "azurerm_linux_virtual_machine" "main" {
   name                            = "${var.prefix}-vm"
   resource_group_name             = azurerm_resource_group.main.name
   location                        = azurerm_resource_group.main.location
-  size                            = "Standard_D2sv3"
+  size                            = "Standard_D2_v3"
   admin_username                  = var.adminusername
   admin_password                  = var.adminpassword
   disable_password_authentication = false
