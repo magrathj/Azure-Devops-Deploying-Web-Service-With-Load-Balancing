@@ -19,6 +19,10 @@ For this project, you will write a Packer template and a Terraform template to d
 ### Instructions
 **Your words here**
 
+```
+    packer build -var-file="variables.json" .\server.json
+```
+
 ### Output
 **Your words here**
 
