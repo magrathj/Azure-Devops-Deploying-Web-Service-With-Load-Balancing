@@ -10,3 +10,6 @@ variable "adminusername" {
 variable "adminpassword" {
     description = "admin's password"
 }
+variable "ipaddress" {
+  description = "public ip address"
+}
