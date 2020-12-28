@@ -19,6 +19,8 @@ For this project, you will write a Packer template and a Terraform template to d
 ### Instructions
 **Your words here**
 
+![Policy Screenshot](./images/policy_tagging_screenshot.PNG "Policy Screenshot")
+
 ```
     az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/SUBSCRIPTION_ID"
 ```
@@ -26,6 +28,7 @@ For this project, you will write a Packer template and a Terraform template to d
 ```
     packer build -var-file="variables.json" .\server.json
 ```
+
 
 ### Output
 **Your words here**
