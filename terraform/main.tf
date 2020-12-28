@@ -3,11 +3,11 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "main" {
-  name     = "${var.prefix}-rg"
+  name     = "${var.resource_group_name}-rg"
   location = var.location
 
   tags = {
-    udacity = "${var.prefix}-project-1"
+    udacity = "${var.resource_group_name}-project-1"
   }
 
 }
@@ -15,61 +15,61 @@ resource "azurerm_resource_group" "main" {
 // Main virtual network, subnets, nics and public IPs
 
 resource "azurerm_virtual_network" "main" {
-  name                = "${var.prefix}-network"
+  name                = "${var.resource_group_name}-network"
   address_space       = ["10.0.0.0/16"]
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
 
   tags = {
-    udacity = "${var.prefix}-project-1"
+    udacity = "${var.resource_group_name}-project-1"
   }
 
 }
 
 resource "azurerm_subnet" "internal" {
-  name                 = "${var.prefix}-internal-subnet"
+  name                 = "${var.resource_group_name}-internal-subnet"
   resource_group_name  = azurerm_resource_group.main.name
   virtual_network_name = azurerm_virtual_network.main.name
   address_prefixes     = ["10.0.0.0/16"]
 }
 
 resource "azurerm_public_ip" "pip" {
-  name                = "${var.prefix}-public-ip"
+  name                = "${var.resource_group_name}-public-ip"
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
   allocation_method   = "Dynamic"
 
   tags = {
-    udacity = "${var.prefix}-project-1"
+    udacity = "${var.resource_group_name}-project-1"
   }
 }
 
 resource "azurerm_network_interface" "main" {
   count               = var.numberofvms
-  name                = "${var.prefix}-nic-${count.index}"
+  name                = "${var.resource_group_name}-nic-${count.index}"
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
 
   ip_configuration {
-    name                          = "${var.prefix}-primary"
+    name                          = "${var.resource_group_name}-primary"
     subnet_id                     = azurerm_subnet.internal.id
     private_ip_address_allocation = "Dynamic"
   }
 
   tags = {
-    udacity = "${var.prefix}-project-1"
+    udacity = "${var.resource_group_name}-project-1"
   }
 }
 
 // Secutiy Group
 
 resource "azurerm_network_security_group" "webserver" {
-  name                = "${var.prefix}-webserver-sg"
+  name                = "${var.resource_group_name}-webserver-sg"
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
 
   tags = {
-    udacity = "${var.prefix}-project-1"
+    udacity = "${var.resource_group_name}-project-1"
   }
 }
 
@@ -118,46 +118,46 @@ resource "azurerm_network_security_rule" "external" {
 // Load balancer
 
 resource "azurerm_lb" "main" {
-  name                = "${var.prefix}-lb"
+  name                = "${var.resource_group_name}-lb"
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
 
   frontend_ip_configuration {
-    name                 = "${var.prefix}-public-address"
+    name                 = "${var.resource_group_name}-public-address"
     public_ip_address_id = azurerm_public_ip.pip.id
   }
 
   tags = {
-    udacity = "${var.prefix}-project-1"
+    udacity = "${var.resource_group_name}-project-1"
   }
 }
 
 resource "azurerm_lb_backend_address_pool" "main" {
   resource_group_name = azurerm_resource_group.main.name
   loadbalancer_id     = azurerm_lb.main.id
-  name                = "${var.prefix}-backend-address-pool"
+  name                = "${var.resource_group_name}-backend-address-pool"
 }
 
 resource "azurerm_network_interface_backend_address_pool_association" "main" {
   count                   = var.numberofvms
   backend_address_pool_id = azurerm_lb_backend_address_pool.main.id
-  ip_configuration_name   = "${var.prefix}-primary"
+  ip_configuration_name   = "${var.resource_group_name}-primary"
   network_interface_id    = element(azurerm_network_interface.main.*.id, count.index)
 }
 
 resource "azurerm_availability_set" "avset" {
-  name                = "${var.prefix}-avset"
+  name                = "${var.resource_group_name}-avset"
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
 
   tags = {
-    udacity = "${var.prefix}-project-1"
+    udacity = "${var.resource_group_name}-project-1"
   }
 }
 
 resource "azurerm_linux_virtual_machine" "main" {
   count                           = var.numberofvms
-  name                            = "${var.prefix}-vm-${count.index}"
+  name                            = "${var.resource_group_name}-vm-${count.index}"
   resource_group_name             = azurerm_resource_group.main.name
   source_image_id                 = var.image_id
   location                        = azurerm_resource_group.main.location
@@ -177,13 +177,13 @@ resource "azurerm_linux_virtual_machine" "main" {
   }
 
   tags = {
-    udacity = "${var.prefix}-project-1"
+    udacity = "${var.resource_group_name}-project-1"
   }
 }
 
 resource "azurerm_managed_disk" "data" {
   count                = var.numberofvms
-  name                 = "${var.prefix}-disk-${count.index}"
+  name                 = "${var.resource_group_name}-disk-${count.index}"
   location             = azurerm_resource_group.main.location
   create_option        = "Empty"
   disk_size_gb         = 10
@@ -191,7 +191,7 @@ resource "azurerm_managed_disk" "data" {
   storage_account_type = "Standard_LRS"
 
   tags = {
-    udacity = "${var.prefix}-project-1"
+    udacity = "${var.resource_group_name}-project-1"
   }
 
 }

@@ -147,6 +147,33 @@ These values map to the variables.json file like so:
     terraform apply
 ```
 
-### Output
-**Your words here**
+Following initial set up:
 
+    Azure Service Principal
+    Azure Policy Assignment
+
+Running the Packer commands creates the following resources:
+
+    Image resource group
+    Managed virtual machine image
+
+
+![Image](./images/resource_groups_screenshot.PNG )
+
+The following resources are created with the Terraform template:
+
+    Resource Group
+    Virtual Network
+    Subnet
+    Network Security Group
+    Security group rules
+    Public IP
+    Load Balancer
+    Backend Address pools
+    Availability Set
+    Network Interface Card(s)
+    Virtual Machine(s)
+    Azure Managed Disk(s)
+
+
+![Load balance VMs](./images/load_balance_vms.PNG )

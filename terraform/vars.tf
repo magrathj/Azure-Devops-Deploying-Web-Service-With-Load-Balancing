@@ -1,5 +1,5 @@
-variable "prefix" {
-    description = "prefix for the virtual machine's name which will be created"
+variable "resource_group_name" {
+    description = "rsg for the virtual machine's name which will be created"
 }
 
 variable "location" {
