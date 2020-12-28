@@ -43,6 +43,10 @@ Log into your Azure account
     az login 
 ```
 
+``` bash 
+    az account set --subscription="SUBSCRIPTION_ID"
+```
+
 The policy we will deploy will prevent any new resources from being created without the tag "Udacity". 
 
 To run this, use the bash script below:
