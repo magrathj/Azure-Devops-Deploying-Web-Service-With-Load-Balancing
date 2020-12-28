@@ -4,12 +4,11 @@ variable "prefix" {
 variable "location" {
   description = "azure region where resources will be located .e.g. northeurope"
 }
-variable "adminusername" {
-  description = "admin's username"
-}
-variable "adminpassword" {
-    description = "admin's password"
-}
+
 variable "ipaddress" {
   description = "public ip address"
+}
+
+variable "numberofvms" {
+  description = "number of VMs to create"
 }

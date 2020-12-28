@@ -41,10 +41,35 @@ For this project, you will write a Packer template and a Terraform template to d
     az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/SUBSCRIPTION_ID"
 ```
 
+This command will output 5 values:
+``` json
+{
+  "appId": "00000000-0000-0000-0000-000000000000",
+  "displayName": "azure-cli-2017-06-05-10-41-15",
+  "name": "http://azure-cli-2017-06-05-10-41-15",
+  "password": "0000-0000-0000-0000-000000000000",
+  "tenant": "00000000-0000-0000-0000-000000000000"
+}
+``` 
+
+These values map to the variables.json file like so:
+
+    appId is the client_id defined above.
+    password is the client_secret defined above.
+    tenant is the tenant_id defined above.
+
+
 ***Create Resource Group***
 ``` bash
     az group create -l "LOCATION" -n "RESOURCE_GROUP_NAME" --tags "udacity"
 ```
+
+These values map to the variables.json file like so:
+
+    LOCATION is the location defined above.
+    RESOURCE_GROUP_NAME is the resource_group_name defined above.
+
+
 
 ![Create Resource Group Screenshot](./images/policy_tagging_screenshot.PNG "Create Resource Group Screenshot")
 
