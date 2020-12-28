@@ -21,20 +21,37 @@ For this project, you will write a Packer template and a Terraform template to d
 
 ![Policy Screenshot](./images/policy_tagging_screenshot.PNG "Policy Screenshot")
 
-***Create Service Principle***
+***Create .gitignore file and add variables.json to it***
+
+***variables.json***
+``` json
+{
+  "client_id": "",
+  "client_secret": "",
+  "subscription_id": "",
+  "tenant_id": "",
+  "resource_group_name": "",
+  "image_name": "",
+  "location": ""
+}
 ```
+
+***Create Service Principle***
+``` bash
     az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/SUBSCRIPTION_ID"
 ```
 
 ***Create Resource Group***
+``` bash
+    az group create -l "LOCATION" -n "RESOURCE_GROUP_NAME" --tags "udacity"
 ```
-    az group create -l eastus -n packer-image-rg
-```
+
+![Create Resource Group Screenshot](./images/policy_tagging_screenshot.PNG "Create Resource Group Screenshot")
 
 
 ***Run packer file***
 ```
-    packer build -var-file="variables.json" .\server.json
+    packer build -var-file="variables.json" ./packer/server.json
 ```
 
 
