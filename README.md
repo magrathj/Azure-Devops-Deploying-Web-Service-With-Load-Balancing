@@ -21,10 +21,18 @@ For this project, you will write a Packer template and a Terraform template to d
 
 ![Policy Screenshot](./images/policy_tagging_screenshot.PNG "Policy Screenshot")
 
+***Create Service Principle***
 ```
     az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/SUBSCRIPTION_ID"
 ```
 
+***Create Resource Group***
+```
+    az group create -l eastus -n packer-image-rg
+```
+
+
+***Run packer file***
 ```
     packer build -var-file="variables.json" .\server.json
 ```
