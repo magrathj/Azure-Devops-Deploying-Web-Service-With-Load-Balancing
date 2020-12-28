@@ -1,7 +1,10 @@
 # Azure Infrastructure Operations Project: Deploying a scalable IaaS web server in Azure
 
 ### Introduction
-For this project, you will write a Packer template and a Terraform template to deploy a customizable, scalable web server in Azure.
+For this project, you will write a Packer template and a Terraform template to deploy a customizable, scalable web server in Azure. In this project, we will assign an azure policy to prevent any new resources without tags from being created. Similarly, we will create an image of the VMs we want to use to act as the load balancer by using packer. Lastly, we will deploy these resources in a scalable immutable way using Terraform. 
+
+![Intro](./images/scalable_web_server_introduction.PNG)
+
 
 ### Dependencies
 1. Create an [Azure Account](https://portal.azure.com) 
@@ -143,9 +146,18 @@ These values map to the variables.json file like so:
     terraform plan
 ```
 
+After running the plan you should see the resources that will be built 
+
+![plan](./images/terraform_plan_screenshot.PNG )
+
 ``` bash
     terraform apply
 ```
+
+After running apply you should see the terraform output
+
+![plan](./images/terraform_deploying_screenshot.PNG )
+
 
 You Should update the default values in 'variables.tf' to reflect your project and similarly, you should add values on deployment for the following:
 
